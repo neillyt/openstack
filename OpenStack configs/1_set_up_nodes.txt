@@ -1,0 +1,56 @@
+You need 3 nodes -
+compute node
+controller node
+network node
+
+# Initially these 3 nodes have identical set ups. Please follow the 
+# instructions below on all 3 nodes.
+
+# Must be running NTP
+yum -y install chrony
+systemctl start chronyd
+systemctl enable chronyd
+
+# Must be set up to use the OpenStack repo
+yum install centos-release-openstack-liberty
+
+# Install the OpenStack client
+yum install python-openstackclient
+
+# Stop and disable NetworkManager and firewalld
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+systemctl stop firewalld
+systemctl disable firewalld
+
+# To ensure your network is not being controlled by NetworkManager,
+# Make sure that your /etc/sysconfig/network-scripts/ifcfg-e* has:
+NM_CONTROLLED=no
+
+# Disable selinux
+vim /etc/selinux/config
+SELINUX=disabled
+
+# Set the hostname - give the host an appropriate name - either compute.pitt.edu,
+# network.pitt.edu, OR controller.pitt.edu 
+vim /etc/hostname
+
+# Edit the file with ONE of the following
+compute.pitt.edu
+network.pitt.edu
+controller.pitt.edu
+
+# Create the host file 
+# This lets our host communicate via hostname rather than IP addresses
+vim /etc/hosts
+
+# Edit the file with all of the following
+192.168.0.101  compute          compute.pitt.edu
+192.168.0.102  network          network.pitt.edu
+192.168.0.103  controller       controller.pitt.edu
+
+# Install packstack
+yum -y install openstack-packstack
+
+# Run an upgrade
+yum upgrade
