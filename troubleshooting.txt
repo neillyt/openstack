@@ -1,0 +1,10 @@
+# TRoubleshooting
+
+# Network node 
+# changed /etc/neutron/neutron.conf 
+# changed enable_isolated_metadata = False
+# to
+enable_isolated_metadata = True
+
+
+

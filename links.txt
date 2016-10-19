@@ -1,0 +1,6 @@
+Useful Links and Resources
+
+<br><a href="https://docs.google.com/document/d/1HgmXnyKXhvjKOOHhpPT3GI7H088jZiaGjQ50kul00ts/edit">OpenStack Log (Google Doc)</a>
+<br><a href="http://docs.openstack.org/ops-guide/">OpenStack Operation's Guide</a>
+<br><a href=http://docs.openstack.org/ops-guide/preface.html#introduction-to-openstack">Some Useful Links to Configs</a>
+<a href="http://docs.openstack.org/admin-guide/">OpenStack Administrator's Guide</a>

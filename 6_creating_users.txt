@@ -1,0 +1,7 @@
+# Creating new users and managing users and roles
+
+# From the Horizon dashboard all users can be managed
+# All users must belong to a project and have a role
+Click the Identity tab
+Click the users tab
+Fill out the information accordingly

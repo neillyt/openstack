@@ -1,0 +1,208 @@
+# Note that everything prepended with # is a COMMENT
+# Actual commands or references to commands will not be prepended by #
+
+
+# You need 3 nodes -compute node, controller node, network node
+# The following directions must be performed exactly the same
+# across all 3 nodes.
+
+##################### TURN OFF NETWORKMANAGER AND FIREWALL
+
+# First we must set up the network. To avoid confusion or conflicting our settings with the 
+# NetworkManager service's settings, we will first turn off NetWork manager. NetworkManager
+# must be turned off to avoid conflicting with OpenStack's network anyways so this is mandatory.
+# While we're at it, let's disable firewalld as well - OpenStack will manage its own firewall.
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+systemctl stop firewalld
+systemctl disable firewalld
+
+# Note that the systemctl command is used heavily to manage services in RedHat7 and CentOS7
+
+####################
+
+
+
+
+#################### CONFIGURING NETWORK SETTINGS
+
+# Now let's set our IP address, default gateway, subnet mask, DNS, etc.
+# First we need to figure out what our NIC is named by using the 'ip addr' command.
+# It should be something like eth0, enp30f0, etc.
+ip addr
+
+# Look at the different NICs and determine which is the physical NIC we are using.
+# We must edit the configuration of this NIC - this is located in 
+# /etc/sysconfig/network-scripts/ifcfg-<NAME OF YOUR NIC>
+# Example: /etc/sysconfig/network-scripts/ifcfg-eth0
+vim /etc/sysconfig/network-scripts/ifcfg-<NAME OF YOUR NIC>
+
+# Delete or comment out all existing settings.
+# Insert the following settings - make sure the IP address you assign
+# matches the documentation for the host it is being assigned to.
+
+DEVICE=<NAME OF YOUR NIC>
+NM_CONTROLLED=no
+BOOTPROTO=none
+ONBOOT=yes
+NETMASK=255.255.255.224
+IPADDR=136.142.139.14x
+GATEWAY=136.142.139.129
+DNS1=136.142.57.10
+
+# BOOTPROTO is the protocol it's using. By setting this to NONE we are saying
+# that we are statically assigning the IP. IF we were to use dhcp, we would 
+# set the protocol to =DHCP
+
+# ONBOOT=yes is telling the system to execute this network script when the
+# system first boots up.
+
+# NM_CONTROLLED=no is ensuring that this network configuration is not being
+# controlled by NetworkManager. Because we have already disabled NetworkManager
+# this setting is a bit redundant. However, it's better to be safe than sorry.
+
+# Because DNS can be configured in multiple places, let's make sure it's also 
+# configured properly in /etc/resolv.conf (it should be automatically when
+# you restart the network service - systemctl restart network)
+vim /etc/resolv.conf
+nameserver 136.142.57.10
+
+# Restart the network using systemctl
+systemctl restart network
+
+# Use 'ip addr' to see if you have the IP address that you've assigned
+ip addr
+
+# Ping yahoo.com to check connectivity
+ping yahoo.com
+
+# Not getting a response? Try pinging 8.8.8.8 or the default gateway. 
+# Double check all settings and consult the google and your brain.
+
+#####################
+
+
+
+
+##################### CONFIGURING SSH
+
+# Let's set up our SSH configuration
+# SSH configuration is located in /etc/ssh/sshd_config
+vim /etc/ssh/sshd_config
+
+# In this file we must locate the line that says "PermitRootLogin"
+# Uncomment this line and set it to 'yes'
+PermitRootLogin yes
+
+# We must now locate the line that says "PasswordAuthentication"
+# Uncomment this line and set it to 'yes'
+PasswordAuthentication yes
+# Save and quit
+
+# If the host is networked and SSH settings have been configured,
+# from another host let's try to SSH to the host
+# If you've logged on successfully, move to the next step.
+
+###################
+
+
+
+
+################### CONFIGURING THE NETWORK TIME PROTOCOL
+
+# Our hosts must be running NTP so their time is always synced up
+yum -y install chrony
+systemctl start chronyd
+systemctl enable chronyd
+
+# Check to see if chronyd is running
+systemctl status chronyd
+
+###################
+
+
+
+################### CONFIGURING THE OPENSTACK REPOSITORY AND PYTHON CLIENT
+
+# A repository is the place where your packages magically come from. 
+# When you use the 'yum' or 'dnf' command to download a package, the
+# package is coming from a repository that has been configured in /etc/yum.repos.d/
+# By default, CentOS is set to use the CentOS specific repos. We need to
+# add the OpenStack repo.
+
+# Must be set up to use the OpenStack repository for downloading specific files to OpenStack
+yum -y install centos-release-openstack-liberty;
+
+
+# Install the OpenStack client
+yum -y install python-openstackclient;
+
+# Install both at once
+yum -y install centos-release-openstack-liberty python-openstackclient;
+
+###################
+
+
+
+################### CONFIGURING SELINUX
+
+# Selinux is a set of rules and contexts to really tighten the security of a Linux
+# system. OpenStack will use its own security, so we must disabled SELinux.
+
+# Disable selinux by setting the /etc/selinux/config file to SELINUX=disabled
+vim /etc/selinux/config
+SELINUX=disabled
+
+###################
+
+
+
+
+################### CONFIGURING HOSTNAMES
+
+# Set the hostname - give the host an appropriate name - either compute.cist.pitt.edu,
+# network.cist.pitt.edu, OR controller.cist.pitt.edu 
+vim /etc/hostname
+# Edit the /etc/hostname file with ONE of the following
+compute.cist.pitt.edu
+network.cist.pitt.edu
+controller.cist.pitt.edu
+
+###################
+
+
+
+################### CONFIGURING KNOWN HOSTS
+# Create the host file 
+# This lets our host communicate via hostname rather than IP addresses
+vim /etc/hosts
+
+# Edit the /etc/hosts file with ALL of the following
+136.142.139.140 controller	controller.cist.pitt.edu
+136.142.139.141	compute		compute.cist.pitt.edu
+136.142.139.142	network		network.cist.pitt.edu
+
+# Now we should be able to 'ping controller', or 'ssh compute' from any
+# of these hosts without using the IP address or fully qualified
+# domain name (FQDN)
+
+###################
+
+
+################### DOWNLOADING THE PACKSTACK SCRIPTS
+
+# These are the scripts that will be responsible for the OpenStack installation.
+
+# Install packstack
+yum -y install openstack-packstack
+
+###################
+
+################### UPGRADE ALL PACKAGES ON HOST
+
+# Run an upgrade
+yum upgrade
+
+# Reboot for good measure to ensure all changes have been made and that they are persistent.
+# After rebooting, check network connectivity and review that all
+# changes that were made still look good.

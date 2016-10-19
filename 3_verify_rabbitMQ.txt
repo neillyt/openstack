@@ -1,0 +1,19 @@
+# Let's look at the AMQP portion of the answer file
+# These instructions are verification only and should not require changing files.
+# Log on to the Controller node where the answer_file is
+cat /root/answer_file.txt | grep AMQP
+
+# *The controller node is also our RabbitMQ node
+
+# By default you should see that CONFIG_AMQP_ENABLE_AUTH=n
+# This means that authentication is turned off. If this is to be turned on (by
+# setting the value to 'y', please set the CONFIG_AMQP_AUTH_USER and # CONFIG_AMQP_AUTH_PASSWORD accordingly.
+
+# Let's look at the RabbitMQ configuration
+cat /etc/rabbitmq/rabbitmq.config
+
+# Look at the rabbit host
+# By default SSL should not be set
+cat /etc/keystone/keystone.conf | grep rabbit
+
+# The default username and password should both be guest

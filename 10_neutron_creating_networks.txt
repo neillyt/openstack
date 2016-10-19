@@ -1,0 +1,114 @@
+# Neutron
+# Before we can spin up our first instance, we need to make the network
+
+
+
+# Here is a reminder of our entire network
+# subnet is /27 255.255.255.224
+# 136.142.139.128	network address ------------
+# 136.142.139.129	default gateway	-------------
+# 136.142.139.130	hiphost		hiphost.cist.pitt.edu
+# 136.142.139.131	hipchat		cloud.cist.pitt.edu
+# 136.142.139.140	controller	controller.cist.pitt.edu
+# 136.142.139.141	compute	compute.cist.pitt.edu
+# 136.142.139.142	network		network.cist.pitt.edu
+# 136.142.139.159	broadcast address ----------
+
+
+# We need the following: router, network, subnets private/public, 
+# add an interface to the router for our subnet, set any public
+# subnets by defining the router's gateway
+
+# When we have accomplished this, we will be able to assign a 
+# "floating IP address" to instances
+
+
+
+
+
+###################### Create a network
+###################### Configure our private network
+# Using the web dashboard, navigate to Compute > Networks > +Create Network
+# Give the network a name
+osn_private
+
+# Give the subnet a name
+osn_private_sub
+
+# Give the subnet a network address (this is your private network)
+192.168.0.0/24
+
+# Give the default gateway an address
+# By default the gateway will be the first address after the network address on the network - 192.168.0.1
+# If you want your gateway to be the default, leave field blank
+# If you want your gateway to have a different address, add it now
+
+# Allocation Pools, DNS Name Servers, and Host Routes can be left blank
+
+######################
+
+###################### Creating the Public network
+# Click Create Network on the web dashboard
+# Give the network a name
+osn_public
+
+# Give the subnet network a name
+osn_public_subnet
+
+# Give the subnet your network address (your physical default gateway that routes you to the internet)
+# Remember your network address is the beginning of your network
+136.142.139.128/27
+
+# Give the gateway IP of your physical gateway
+136.142.139.129
+
+# Allocation pools - this is very important as we must be careful to not allocate
+# addresses that are already used! Like for the HipChat server or the OpenStack nodes themselves
+# Give each range seperated by a common. 1 range per line.
+136.142.139.132,136.142.139.139
+136.142.139.144,136.142.139.158
+
+# DNS Name Servers and Host Routes can be left alone
+# Create
+
+#########################
+
+
+
+
+
+######################### Make our network an external network
+
+# Log in as admin
+# On the left side of the dashboard, navigate to Admin > Networks > osn_public > Edit Network
+# Click 'external network' and Save Changes
+# You can now log out and back in as normal account if desired
+
+#########################
+
+
+
+
+
+######################### Create a Router
+
+# Navigate to Compute > Router > +Create Router
+# Give the router a name
+osn_router
+
+# Now back into Compute > Router and click on osn_router
+# We must add an interface. 
+# Click Add Interface
+# Click the drop down for Subnet* and choose our private subnet
+osn_private
+# Do not bother adding an IP address
+
+# Now we need to set our gateway on the router
+# Navigate to Compute > Network > Network Topology - this will help us visualize things
+# Right now our public subnet is not yet attached to the router
+# We first need to set our gateway to the external network
+# Go back to Compute > Network > Routers, under actions choose "Set Gateway"
+# From the External Network drop down, select 'osn_public'
+
+###########################
+

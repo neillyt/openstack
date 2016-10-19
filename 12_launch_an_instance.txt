@@ -1,0 +1,46 @@
+# Launching an instance
+
+# Compute > Instances > +Launch Instance
+# Select your name, flavor, boot source, image name
+
+# Under 'Access and Security' choose the security group we created
+osn_access_rules
+# Uncheck 'default' if it is selected
+# Select the keypair we created in the previous step
+# Key Pair, select osn_keypair
+
+# Under 'Networking' choose our networks
+# Click the network you'd like to use
+
+# Post Creation and Advanced Options can be left alone
+
+# Launch
+
+# Once the instance is Running, click the 'Actions' dropdown
+# Click 'Associate Floating IP'
+# IP Address will say "No floating IP addresses allocated" - click +
+# Click the 'Pool' dropdown, select osn_public
+# Click 'allocate IP'
+# This is mapping our external IP (public network) to our internal IP (private network)
+# Click 'Associate'
+# Refresh the page, you should see the instance now has a public and private IP
+
+
+# Accessing the instance via console
+# Click on the instance name
+# Click console
+# This should load a command prompt from within the browser
+# You can also view logs here
+
+
+
+# Now we will SSH to the instance
+# We need to change permissions on the .pem key we previously downloaded
+# For Linux:
+chmod 600 osn_keypair.pem
+# For windows:
+not necessary
+
+# SSH using the key
+ssh -i osn_keypair.pem username@publicip
+# Example: ssh -i own_keypair.pem cirros@136.142.139.148

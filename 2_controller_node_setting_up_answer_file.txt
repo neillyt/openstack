@@ -1,0 +1,64 @@
+# Controller node set up
+# After completing the initial set up on all 3 nodes, follow these directions
+# for the controller node
+
+# Create the packstack answer file
+packstack --gen-answer-file /root/answers.txt
+
+# Take a look at the answers.txt file
+# This file tells the PackStack script which services to install and not install
+cat /root/answers.txt
+
+# Only the settings explicitly listed are to be changed. All other settings can
+# maintain their default status
+
+# Open the answers.txt file and lets set our IP addresses correctly to the hosts
+# This is very important to assign the correct IP addresses because the PackStack
+# script actually ssh's into these hosts to install the correct components
+# My set up will look like this:
+vim answers.txt
+CONFIG_CONTROLLER_HOST=192.168.0.103
+CONFIG_COMPUTE_HOSTS=192.168.0.101
+CONFIG_NETWORK_HOSTS=192.168.0.102
+
+# If the AMQP backend is not set to rabbitmq, do so
+CONFIG_AMQP_BACKEND=rabbitmq
+
+# The controller node will double as the AMQP (Advanced Message Queue Protocol)
+# server (RabbitMQ) as well as the Database server (MariaDB)
+# Make sure the config is set accordingly to reflect the Controller IP for these
+# entries
+CONFIG_AMQP_HOST=192.168.0.103
+CONFIG_MARIADB_HOST=192.168.0.103
+
+# Let's set the MariaDB to use the root account and set the password to "Panther$"
+CONFIG_MARIADB_PW=Panther$
+
+# Set "The token to use for the Keystone service api" to pittpanther16 (lowercase)
+CONFIG_KEYSTONE_ADMIN_TOKEN=pittpanther16
+
+# Set the password to use for the Keystone admin user to "Panther$"
+CONFIG_KEYSTONE_ADMIN_PW=Panther$
+
+# Set the password to use for the Keystone demo user to "Panther$"
+CONFIG_KEYSTONE_DEMO_PW=Panther$
+
+# Make sure the type of identity backend is sql for now (in the future we shall use LDAP)
+CONFIG_KEYSTONE_IDENTITY_BACKEND=sql
+
+# Set the Keystone LDAP backend URL to that of the Controller node
+CONFIG_KEYSTONE_LDAP_URL=ldap://192.168.0.103
+
+# Looking through the configuration you will see several other passwords. The defaults for these can
+# be used. We can always refer to this file to retrieve the passwords
+
+# Save the file, if you're using VIM then:
+Press ESC
+:wq!
+
+# We are now ready to deploy!
+packstack --answer-file=/root/answers.txt
+
+# It will now prompt you for all of your root passwords for 
+# the 3 nodes
+
