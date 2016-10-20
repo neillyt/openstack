@@ -33,6 +33,21 @@ useradd twm18 -p `openssl passwd -crypt 123`;
 useradd astrozyk13 -p `openssl passwd -crypt 123`;
 useradd mea95 -p `openssl passwd -crypt 123`;
 
+export OS_USERNAME=admin;
+export OS_PASSWORD=Panther$;
+export OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0;
+export OS_PROJECT_NAME=admin;
+
+OS_USERNAME=admin;
+OS_PASSWORD=Panther$;
+OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0;
+OS_PROJECT_NAME=admin;
+
+echo "OS_USERNAME=admin" >> /etc/environment;
+echo "OS_PASSWORD=Panther$" >> /etc/environment;
+echo "OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0" >> /etc/environment;
+echo "OS_PROJECT_NAME=admin" >> /etc/environment;
+
 cd /etc/sysconfig/network-scripts;
 rm ifcfg-$interface;
 echo "BOOTPROTO=none" > ifcfg-$interface;
