@@ -49,11 +49,6 @@ export OS_PASSWORD=Panther$;
 export OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0;
 export OS_PROJECT_NAME=admin;
 
-cd /;
-git init;
-git clone https://github.com/neillyt/openstack.git;
-
-
 cd /etc/sysconfig/network-scripts;
 rm ifcfg-$interface;
 echo "BOOTPROTO=none" > ifcfg-$interface;
@@ -73,12 +68,16 @@ systemctl disable firewalld;
 systemctl restart network;
 wait;
 
-yum -y install wget mlocate vim chrony centos-release-openstack-liberty;
+yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
 wait;
 yum -y install python-openstack client openstack-packstack;
 wait;
 yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools" "X Window System" "GNOME";
 wait;
+
+cd /;
+git init;
+git clone https://github.com/neillyt/openstack.git;
 
 systemctl start chronyd;
 systemctl enable chronyd;

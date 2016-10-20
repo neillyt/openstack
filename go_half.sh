@@ -12,7 +12,7 @@ systemctl stop firewalld;
 systemctl disable firewalld;
 
 wait;
-yum -y install wget mlocate vim chrony centos-release-openstack-liberty;
+yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
 wait;
 yum -y install python-openstack client openstack-packstack;
 wait;
@@ -53,7 +53,6 @@ export OS_PROJECT_NAME=admin;
 cd /;
 git init;
 git clone https://github.com/neillyt/openstack.git;
-
 
 echo "136.142.139.140   controller      controller.cist.pitt.edu" >> /etc/hosts ;
 echo "136.142.139.141   network         network.cist.pitt.edu" >> /etc/hosts ;
