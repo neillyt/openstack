@@ -5,3 +5,5 @@
 Click the Identity tab
 Click the users tab
 Fill out the information accordingly
+
+# From the command line

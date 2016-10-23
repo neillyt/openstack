@@ -65,8 +65,8 @@ osn_public_subnet
 # Allocation pools - this is very important as we must be careful to not allocate
 # addresses that are already used! Like for the HipChat server or the OpenStack nodes themselves
 # Give each range seperated by a common. 1 range per line.
-136.142.139.132,136.142.139.139
-136.142.139.144,136.142.139.158
+136.142.139.133,136.142.139.139
+136.142.139.145,136.142.139.158
 
 # DNS Name Servers and Host Routes can be left alone
 # Create
@@ -92,11 +92,14 @@ osn_public_subnet
 
 ######################### Create a Router
 
-# Navigate to Compute > Router > +Create Router
+# Navigate to Project > Network > Routers > +Create Router
 # Give the router a name
 osn_router
 
-# Now back into Compute > Router and click on osn_router
+# Assign the router the External Network you created
+osn_public
+
+# Now back into Project > Network > Routers and click on osn_router
 # We must add an interface. 
 # Click Add Interface
 # Click the drop down for Subnet* and choose our private subnet
@@ -104,10 +107,10 @@ osn_private
 # Do not bother adding an IP address
 
 # Now we need to set our gateway on the router
-# Navigate to Compute > Network > Network Topology - this will help us visualize things
+# Navigate to Project > Network > Network Topology - this will help us visualize things
 # Right now our public subnet is not yet attached to the router
 # We first need to set our gateway to the external network
-# Go back to Compute > Network > Routers, under actions choose "Set Gateway"
+# Go back to Project > Network > Routers, under actions choose "Set Gateway"
 # From the External Network drop down, select 'osn_public'
 
 ###########################

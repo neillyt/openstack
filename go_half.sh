@@ -40,6 +40,12 @@ echo "OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0" >> /etc/environment
 echo "OS_PROJECT_NAME=admin" >> /etc/environment;
 source /etc/environment;
 
+echo "OS_USERNAME=admin" >> /etc/profile;
+echo "OS_PASSWORD=Panther$" >> /etc/profile;
+echo "OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0" >> /etc/profile;
+echo "OS_PROJECT_NAME=admin" >> /etc/profile;
+source /etc/profile;
+
 OS_USERNAME=admin;
 OS_PASSWORD=Panther$;
 OS_AUTH_URL=http://controller.cist.pitt.edu:5000/v2.0;
