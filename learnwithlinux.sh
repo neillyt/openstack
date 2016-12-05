@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo "What is the hostname? Do not include '.cist.pitt.edu'";
 echo "Good Example: awesomebox";
 echo "Bad Example: awesomebox.cist.pitt.edu";
@@ -22,7 +23,7 @@ wait;
 systemctl start chronyd;
 systemctl enable chronyd;
 
-echo "$hostname.cist.pitt.edu" > /etc/hostname;
+echo "$hostname.learnwithlinux.com" > /etc/hostname;
 
 git init;
 git clone https://github.com/neillyt/openstack.git;
