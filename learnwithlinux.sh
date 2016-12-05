@@ -17,7 +17,7 @@ yum -y install wget mlocate vim chrony centos-release-openstack-newton git;
 wait;
 yum -y install python-openstack client openstack-packstack;
 wait;
-yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools" "X Window System" "GNOME";
+yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools";
 wait;
 
 systemctl start chronyd;
