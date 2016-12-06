@@ -12,7 +12,7 @@ systemctl stop firewalld;
 systemctl disable firewalld;
 
 wait;
-yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
+yum -y install wget mlocate vim chrony centos-release-openstack-newton git;
 wait;
 yum -y install python-openstack client openstack-packstack;
 wait;
@@ -34,14 +34,25 @@ useradd twm18 -p `openssl passwd -crypt 123`;
 useradd astrozyk13 -p `openssl passwd -crypt 123`;
 useradd mea95 -p `openssl passwd -crypt 123`;
 
-echo "136.142.139.140   controller      controller.cist.pitt.edu" >> /etc/hosts ;
-echo "136.142.139.141   network         network.cist.pitt.edu" >> /etc/hosts ;
-echo "136.142.139.142   compute         compute.cist.pitt.edu" >> /etc/hosts ;
-echo "136.142.139.143   compute2        compute2.cist.pitt.edu" >> /etc/hosts ;
-echo "136.142.139.144   compute3        compute3.cist.pitt.edu" >> /etc/hosts ;
+sudo sed -i '/Allow root to run any commands anywhere/a thn16      ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a zsm5       ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a lewicki    ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a sellison   ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a ellison    ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a dre15      ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a twm18      ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a astrozyk13 ALL=(ALL)       ALL' /etc/sudoers;
+sudo sed -i '/Allow root to run any commands anywhere/a mea95      ALL=(ALL)       ALL' /etc/sudoers;
 
-sed -i '/PermitRootLogin/a PermitRootLogin yes' sshd_config;
-sed -i '/PasswordAuthentication/a PasswordAuthentication yes' sshd_config
+echo "136.142.139.133   controller      controller.cist.pitt.edu" >> /etc/hosts ;
+echo "136.142.139.134   network         network.cist.pitt.edu" >> /etc/hosts ;
+echo "136.142.139.135   compute         compute.cist.pitt.edu" >> /etc/hosts ;
+echo "136.142.139.136   compute2        compute2.cist.pitt.edu" >> /etc/hosts ;
+echo "136.142.139.137   compute3        compute3.cist.pitt.edu" >> /etc/hosts ;
+
+sudo sed -i '/PermitRootLogin/a PermitRootLogin yes' /etc/ssh/sshd_config ;
+sudo sed -i '/PasswordAuthentication/a PasswordAuthentication yes' /etc/ssh/sshd_config ;
+sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config ;
 
 wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm;
 wait;
@@ -56,11 +67,12 @@ echo "**************************************************************************
 echo "***************************************************************************************";
 echo "***************************************************************************************";
 echo "***************************************************************************************";
-echo " ALL HOSTS: Disable selinux in /etc/selinux/config";
-echo " CONTROLLER: packstack --gen-answer-file /root/answers.txt";
+echo "                  REBOOTING IN 10 SECONDS!!!!!!!!!!!!!!!!!!!!!!!                       ";
 echo "***************************************************************************************";
 echo "***************************************************************************************";
 echo "***************************************************************************************";
 echo "***************************************************************************************";
 
+sleep 10;
+sudo reboot now;
 
