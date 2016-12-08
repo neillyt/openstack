@@ -24,11 +24,11 @@ systemctl enable chronyd;
 
 echo "$hostname.learnwithlinux.com" > /etc/hostname;
 
-echo "192.168.0.100   controller      controller.learnwithlinux.com" >> /etc/hosts ;
-echo "192.168.0.101   network         network.learnwithlinux.com" >> /etc/hosts ;
-echo "192.168.0.102   compute         compute.learnwithlinux.com" >> /etc/hosts ;
-echo "192.168.0.103   compute2        compute2.learnwithlinux.com" >> /etc/hosts ;
-echo "192.168.0.104   compute3        compute3.learnwithlinux.com" >> /etc/hosts ;
+#echo "192.168.0.100   controller      controller.learnwithlinux.com" >> /etc/hosts ;
+#echo "192.168.0.101   network         network.learnwithlinux.com" >> /etc/hosts ;
+#echo "192.168.0.102   compute         compute.learnwithlinux.com" >> /etc/hosts ;
+#echo "192.168.0.103   compute2        compute2.learnwithlinux.com" >> /etc/hosts ;
+#echo "192.168.0.104   compute3        compute3.learnwithlinux.com" >> /etc/hosts ;
 
 sudo sed -i '/PermitRootLogin/a PermitRootLogin yes' /etc/ssh/sshd_config ;
 sudo sed -i '/PasswordAuthentication/a PasswordAuthentication yes' /etc/ssh/sshd_config ;
