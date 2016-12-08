@@ -24,17 +24,16 @@ systemctl enable chronyd;
 
 echo "$hostname.learnwithlinux.com" > /etc/hostname;
 
-#echo "192.168.0.100   controller      controller.learnwithlinux.com" >> /etc/hosts ;
-#echo "192.168.0.101   network         network.learnwithlinux.com" >> /etc/hosts ;
-#echo "192.168.0.102   compute         compute.learnwithlinux.com" >> /etc/hosts ;
-#echo "192.168.0.103   compute2        compute2.learnwithlinux.com" >> /etc/hosts ;
-#echo "192.168.0.104   compute3        compute3.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.1   hv1      hv1.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.2   hv2         hv2.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.3   controller         controller.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.4   network        network.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.5   compute1        compute1.learnwithlinux.com" >> /etc/hosts ;
 
-#sudo sed -i '/PermitRootLogin/a PermitRootLogin yes' /etc/ssh/sshd_config ;
-#sudo sed -i '/PasswordAuthentication/a PasswordAuthentication yes' /etc/ssh/sshd_config ;
-#sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config ;
+sudo sed -i '/PermitRootLogin/a PermitRootLogin yes' /etc/ssh/sshd_config ;
+sudo sed -i '/PasswordAuthentication/a PasswordAuthentication yes' /etc/ssh/sshd_config ;
+sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config ;
 
-#wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm;
 yum -y install epel-release;
 wait;
 rpm -ivh epel-release-7-8.noarch.rpm;
