@@ -5,6 +5,7 @@ echo "Good Example: awesomebox";
 echo "Bad Example: awesomebox.learnwithlinux.com";
 read hostname;
 echo ""
+ip=`ifconfig | grep inet | awk '{print $2}' | head -1`
 
 systemctl stop NetworkManager;
 systemctl disable NetworkManager;
@@ -16,7 +17,7 @@ yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
 wait;
 yum -y install python-openstack client openstack-packstack;
 wait;
-yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools" "X Window System" "GNOME";
+yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools";
 wait;
 
 systemctl start chronyd;
@@ -28,7 +29,8 @@ echo "192.168.1.1   hv1      hv1.learnwithlinux.com" >> /etc/hosts ;
 echo "192.168.1.2   hv2         hv2.learnwithlinux.com" >> /etc/hosts ;
 echo "192.168.1.3   controller         controller.learnwithlinux.com" >> /etc/hosts ;
 echo "192.168.1.4   network        network.learnwithlinux.com" >> /etc/hosts ;
-echo "192.168.1.5   compute1        compute1.learnwithlinux.com" >> /etc/hosts ;
+echo "192.168.1.5   manila        manila.learnwithlinux.com" >> /etc/hosts ;
+echo "$ip           $hostname     $hostname.learnwithlinux.com" >> /etc/hosts ;
 
 sudo sed -i '/PermitRootLogin/a PermitRootLogin yes' /etc/ssh/sshd_config ;
 sudo sed -i '/PasswordAuthentication/a PasswordAuthentication yes' /etc/ssh/sshd_config ;
