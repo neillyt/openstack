@@ -18,7 +18,8 @@ yum -y install epel-release;
 yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
 yum -y install python-openstackclient openstack-packstack;
 yum -y install erlang tigervnc tigervnc-server;
-yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools" "X Window System" "GNOME";
+yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools"
+# yum -y group install "X Windows Server" "GNOME"
 yum -y upgrade;
 
 systemctl start chronyd;
@@ -42,21 +43,21 @@ systemctl set-default graphical.target;
 sed -i 's/USER/root/g' /etc/systemd/system/vncserver\@.service
 systemctl enable vncserver@:1.service
 
-echo 'DEVICE="br0"' > /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'TYPE="Bridge"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'BOOTPROTO="none"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'IPADDR="$ip"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'NETMASK="255.255.255.224"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'GATEWAY="136.142.139.129"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'DNS1="136.142.57.10"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'DNS2="8.8.8.8"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'STP="on"' >> /etc/sysconfig/network-scripts/ifcfg-br0
-echo 'DELAY="0"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'DEVICE="br0"' > /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'ONBOOT="yes"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'TYPE="Bridge"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'BOOTPROTO="none"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'IPADDR="$ip"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'NETMASK="255.255.255.224"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'GATEWAY="136.142.139.129"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'DNS1="136.142.57.10"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'DNS2="8.8.8.8"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'STP="on"' >> /etc/sysconfig/network-scripts/ifcfg-br0
+#echo 'DELAY="0"' >> /etc/sysconfig/network-scripts/ifcfg-br0
 
-echo 'DEVICE=em1' > /etc/sysconfig/network-scripts/ifcfg-em1
-echo 'ONBOOT=yes' >> /etc/sysconfig/network-scripts/ifcfg-em1
-echo 'BRIDGE="br0"' >> /etc/sysconfig/network-scripts/ifcfg-em1
+#echo 'DEVICE=em1' > /etc/sysconfig/network-scripts/ifcfg-em1
+#echo 'ONBOOT=yes' >> /etc/sysconfig/network-scripts/ifcfg-em1
+#echo 'BRIDGE="br0"' >> /etc/sysconfig/network-scripts/ifcfg-em1
 
 
 echo "***************************************************************************************";
