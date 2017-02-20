@@ -1,0 +1,65 @@
+# Managing users, roles, and projects from the CLI
+# The keystone CLI and OpenStack CLI can do many of the same things
+
+# To get a list of projects
+keystone tenant-list
+openstack project list
+
+# Creating a new project
+keystone tenant-create
+openstack project create
+
+openstack project create --description 'A New Project' new-project
+
+# Update a project
+openstack project set <project id> --disable
+
+# Get info and details about a project
+openstack project show <project id>
+
+# To update the name of a project
+openstack project set <project id> --name AwesomeProject
+
+# To delete a project
+openstack project delete <project id>
+
+# To see all users
+openstack user list
+
+# To create a new user and add them to a project
+openstack user create --project <project id> --password <password> joe-shmo
+
+# To disable a user
+openstack user set joe-shmo --disable
+
+# To enable a user
+openstack user set joe-shmo --enable
+
+# To change the name and description of a user
+openstack user set joe-shmo --name steve-shmo --email ss@email.com 
+
+# Let's look at our current roles that are available
+openstack role list
+
+# Create a new role called CIST
+openstack role create CIST
+
+# Add a user to a role and a project
+openstack role add --user steve-shmo --project <project id> <role id>
+
+# To see details about a specific role
+openstack role show <role name>
+
+# Remove a user from a role and a project
+openstack role remove --user steve-shmo --project <project id>
+
+
+
+
+
+
+
+
+
+
+

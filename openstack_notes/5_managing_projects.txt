@@ -1,0 +1,38 @@
+# Adding projects (tenants = projects, they are synonymous and entirely interchangeable)
+# A project is an assigned number of OpenStack users or resources
+# Preparing to launch an instance
+
+# Open the Horizon dashboard (use the IP address of your Controller node if it does not have a DNS record)
+Click Identity
+Click +Create Project
+Give the project a name and description
+Select quota and set them accordingly
+
+# Each project can have a quota that allows them to have a set amount of resources such as IP addresses, RAM,
+# CPU, disk space, instances, etc. This gives us control over who uses what. For example, if a department wants
+# to use our OpenStack instance, we can limit them and prevent them from using too many resources.
+
+
+# Managing projects
+# Using the keystone CLI we can manage our projects.
+source ~/keystonerc_admin
+
+# To get help with keystone:
+keystone help
+keystone help <command>
+
+# To see all of the projects that have already been created:
+keystone tenant-list
+
+# This can also be viewed and controlled also using the Horizon GUI
+
+# In keystone CLI, let's create a tenant:
+keystone tenant-create --name Test --description "Our first tenant!" --enabled true
+
+# Deleting a project from keystone CLI - first get the ID from the tenant-list
+keystone tenant-list
+keystone tenant-delete --id=<id from list>
+
+# You can also update a project under the 'Actions' column and by clicking 'modify users'
+# We can add/subtract project users
+

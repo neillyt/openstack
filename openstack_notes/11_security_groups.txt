@@ -1,0 +1,66 @@
+# Setting up security groups
+
+# A security group is essentially firewall rules
+# Setting up security groups is necessary to allow access to specific ports on our instances
+# Without access to ports 5901 (VNC), 22 (SSH), we would not be able to access our isntances.
+
+# Navigate to the dashboard - Compute > Access and Security 
+# Create security group
+# Give the group a name
+osn_access_rules
+
+# Give the group a description
+Rules to access instances via SSH and VNC.
+
+# Click Manage Rules
+# Egress gives access to anything when remote is set to 0.0.0.0
+# By default there are no rules
+
+# Add a rule for SSH (port 22)
+# Click Add Rule
+# For the Rule dropdown, select SSH
+# Remote, select CIDR
+# CIDR, select 0.0.0.0/0     
+# Making the CIDR 0.0.0.0/0 means anyone can access it from anywhere
+# Click Add
+
+
+# Add a rule for HTTPS (port 443)
+# Click Add Rule
+# For the Rule dropdown, select HTTPS
+# Remote, select CIDR
+# CIDR, select 0.0.0.0/0     
+# Making the CIDR 0.0.0.0/0 means anyone can access it from anywhere
+# Click Add
+
+# Add a rule for HTTP (port 80)
+# Click Add Rule
+# For the Rule dropdown, select HTTP
+# Remote, select Security Group
+# For Security Group, select our access rules we just made
+# Security Group, select osn_access_rules (current)
+
+# Add a rule for ICMP (any port)
+# Click Add Rule
+# For the Rule dropdown, select ALL ICMP
+# Remote, select CIDR
+# CIDR, select 0.0.0.0/0     
+# Making the CIDR 0.0.0.0/0 means anyone can access it from anywhere
+# Click Add
+
+
+# Now we must set up keys so that we can access these images via SSH without passwords
+# Compute > Access Security > +Create Key Pair
+# This will prompt you to download a .pem key
+# We will need this .pem key soon
+
+
+
+
+
+
+
+
+
+
+
