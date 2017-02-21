@@ -19,7 +19,7 @@ yum -y install wget mlocate vim chrony centos-release-openstack-liberty git;
 yum -y install python-openstackclient openstack-packstack;
 yum -y install erlang tigervnc tigervnc-server;
 yum -y group install "Virtualization" "Virtualization Client" "Virtualization Hypervisor" "Virtualization Platform" "Virtualization Tools"
-yum -y group install "X Windows Server" "GNOME"
+yum -y group install "X Windows System" "GNOME"
 yum -y upgrade;
 
 systemctl start chronyd;
